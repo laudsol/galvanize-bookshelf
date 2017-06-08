@@ -12,6 +12,8 @@ app.disable('x-powered-by');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan');
+const jwt = require('jsonwebtoken');
+// const secret = require('./routes/secret');
 
 switch (app.get('env')) {
   case 'development':
@@ -27,6 +29,22 @@ switch (app.get('env')) {
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+app.use(function (req,res,next) {
+  if (req.cookies.token) {
+    jwt.verify(req.cookies.token,process.env.JWT_SECRET, function (err,decoded) {
+      if (err) {
+        res.clearCookie('token');
+        return next(err);
+      }
+      req.user = decoded;
+      next();
+    });
+  } else {
+    next();
+  }
+});
+
 
 const path = require('path');
 
@@ -50,6 +68,7 @@ app.use(books);
 app.use(favorites);
 app.use(token);
 app.use(users);
+// app.use('/secret', secret);
 
 app.use((_req, res) => {
   res.sendStatus(404);
