@@ -36,7 +36,7 @@ const humps = require('humps');
       res.set('Content-Type','text/plain')
       res.status(401).send('Unauthorized');
     } else {
-        let someId = req.query.bookId
+        let someId = req.query.bookId //
 
         knex('favorites')
         .where('book_id','=',someId)

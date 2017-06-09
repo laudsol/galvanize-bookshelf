@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const saltRounds = 10;
 const bcrypt = require('bcrypt');
 
-router.post('/users', function(req,res,next){
+router.post('/users', function(req,res,next){ //runs when a new user logs in
 
   const body = req.body;
 

@@ -10,7 +10,6 @@ const knex = require('../knex');
 const bodyParser = require('body-parser');
 
 
-
 router.get('/books',function(req,res,next){
   knex('books')
     .select(
