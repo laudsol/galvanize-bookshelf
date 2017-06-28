@@ -31,8 +31,8 @@ app.use(cookieParser());
 
 app.use(function (req,res,next) {
   if (req.cookies.token) { //if user comes to page without making account or logging in
-    jwt.verify(req.cookies.token,process.env.JWT_SECRET, function (err,decoded) //checks cookie with the secret jwt {
-      if (err) { //if err, remove the cookie
+    jwt.verify(req.cookies.token, process.env.JWT_KEY, function (err,decoded){ //checks cookie with the secret jwt {
+      if (err) {
         res.clearCookie('token');
         return next(err);
       }
@@ -42,6 +42,7 @@ app.use(function (req,res,next) {
   } else {
     next(); // if no cookie then next
   }
+
 });
 
 

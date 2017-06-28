@@ -29,7 +29,9 @@ router.post('/token', (req, res, next) => {
     var pass = bcrypt.compareSync(req.body.password, result[0].password);
     if (pass) {
       delete result[0].password;
-      var token = jwt.sign(result[0], 'secret');
+      var token = jwt.sign(result[0], process.env.JWT_KEY,{expiresIn : '7 days'});
+      // console.log(result[0]);
+      // console.log(token);
       res.cookie('token', token, {httpOnly: true});
       return res.send(result[0]);
     } else {

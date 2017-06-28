@@ -24,6 +24,7 @@ router.get('/books',function(req,res,next){
     )
     .orderBy('title')
     .then(function(books){
+      console.log(books);
       return res.send(books);
     });
 });
